@@ -28,7 +28,7 @@ class BullingState(StatesGroup):
 
 router = Router()
 
-ADMIN_IDS = [7087792004]
+ADMIN_IDS = [7087792004, 5086999527]
 
 
 #functions
