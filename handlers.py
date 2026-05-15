@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.filters import Command, CommandStart
 from aiogram.types import Message, CallbackQuery
-from keyboards import type, catolog, offer, qq, tch, bck
+from keyboards import type, catolog, offer, qq, tch, bck, again
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -418,13 +418,14 @@ async def done_report(callback: CallbackQuery):
                 user_id,
                 f"✅ Ваша заявка #{report_id} решена!\n\n"
                 f"✉️ Ответ администрации:\n{answer}"
-                f"Если остались вопросы — создайте новую заявку."
+                f"Если остались вопросы — создайте новую заявку.", reply_markup=again
+                
             )
         else:
             await callback.bot.send_message(
                 user_id,
                 f"✅ Ваша заявка #{report_id} решена!\n"
-                f"Если остались вопросы — создайте новую заявку."
+                f"Если остались вопросы — создайте новую заявку.", reply_markup=again
             )
     except Exception:
         pass
@@ -458,7 +459,7 @@ async def send_reply(message: Message, state: FSMContext):
             user_id,
             f"✉️ Ответ на вашу заявку #{report_id}:\n\n"
             f"{message.text}\n\n"
-            f"✅ Заявка закрыта."
+            f"✅ Заявка закрыта.", reply_markup=again
         )
         await message.answer("✅ Ответ отправлен пользователю")
     except Exception:
@@ -466,6 +467,10 @@ async def send_reply(message: Message, state: FSMContext):
 
     await state.clear()
 
+@router.callback_query(F.data == "again")
+async def again(callback: CallbackQuery):
+    await callback.answer()
+    await callback.message.edit_text("Выбери что ты хочешь написать", reply_markup=type)
 
 
 
@@ -579,7 +584,7 @@ async def bulling_q3(message: Message, state: FSMContext):
     await message.answer(
         f"✅ Жалоба отправлена! ID: <b>{report_id}</b>\n\n"
         f"Администрация рассмотрит её в ближайшее время. Ты не один.",
-        parse_mode="HTML"
+        parse_mode="HTML", reply_markup=again
     )
     await state.clear()
 
@@ -825,6 +830,6 @@ async def get_text(message: Message, state: FSMContext):
         status="new"
     )
 
-    await message.answer(f"✅ Ваша заявка отправлена! ID: {report_id}")
+    await message.answer(f"✅ Ваша заявка отправлена! ID: {report_id}", reply_markup=again)
 
     await state.clear()
