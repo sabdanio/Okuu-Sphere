@@ -82,3 +82,7 @@ tch = InlineKeyboardMarkup(inline_keyboard=[
 bck = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text="🔙 Назад", callback_data="back_fc")]
 ])
+
+again = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text="🔁 Подать ещё одну заявку", callback_data="again")]
+])
