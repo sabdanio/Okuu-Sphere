@@ -436,7 +436,7 @@ async def done_report(callback: CallbackQuery):
 
 @router.callback_query(F.data.startswith("reply_"))
 async def reply_start(callback: CallbackQuery, state: FSMContext):
-    callback.answer()
+    await callback.answer()
     report_id = int(callback.data.split("_")[1])
 
     await state.update_data(report_id=report_id)
@@ -468,7 +468,7 @@ async def send_reply(message: Message, state: FSMContext):
     await state.clear()
 
 @router.callback_query(F.data == "again")
-async def again(callback: CallbackQuery):
+async def agan(callback: CallbackQuery):
     await callback.answer()
     await callback.message.edit_text("Выбери что ты хочешь написать", reply_markup=type)
 
