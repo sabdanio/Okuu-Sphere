@@ -10,7 +10,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import sqlite3
 from groq import Groq
 
-client = Groq(api_key="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")
+client = Groq(api_key="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")
 
 class ReportState(StatesGroup):
     waiting_for_text = State()
